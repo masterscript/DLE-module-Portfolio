@@ -46,7 +46,7 @@
     		while ( $row = $db->get_row () )
     		{    			    $towns[ $row[ 'id' ]] = $row;
     		}
-
+		$towns['add_new_city']['name'] = " - add new city - ";
     		return $towns;
   	}
 
