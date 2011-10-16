@@ -128,6 +128,11 @@ HTML;
 				  	$tpl->set ( '{button}', $button );
 
 			  		$tpl->copy_template = <<<HTML
+
+
+
+<script type="text/javascript" src="/engine/modules/portfolio/js/jquery-1.6.2.min.js"></script>
+<!--
 <link rel="stylesheet" href="/engine/modules/portfolio/js/uploadify.css"></script>
 <script type="text/javascript" src="/engine/modules/portfolio/js/jquery.form.js"></script>
 <script type="text/javascript" src="/engine/modules/portfolio/js/jquery.uploadify.js"></script>
@@ -157,21 +162,35 @@ HTML;
 	});
 </script>
 
+-->
+
 <form method="POST" enctype="multipart/form-data" name="portfolio_form">
 	{$hidden}
 	{$tpl->copy_template}
 </form>
+
+<script type="text/javascript" src="/engine/modules/portfolio/js/multiupload.js"></script>
+
+<form enctype="multipart/form-data" name="formsendfile" id="uploadform" action="/engine/modules/portfolio/upload.php" method="post">
+Choose files to send (max. 5, accepted formats: .png, .jpg, .jpeg,  .gif): <br/>
+<input type="hidden" name="user_id" value="{$member_id['user_id']}" />
+<script type="text/javascript">
+upload = new adekMultiUpload('formsendfile',5,[".png",".jpg",".jpeg",".gif"],'Filedata');
+upload.init();
+</script>
+<input style="padding:2px;margin:5px 0" name="action" type="submit" value="Send it!"/>
+</form>
+
 HTML;
 
 					$tpl->set ( '{images}',	getImages ( $member_id[ 'user_id' ] ));
+	  				$tpl->compile ( 'content' );
+	  				$tpl->load_template ( 'portfolio/ui_form_add_cities_name.tpl' );
 	  				$tpl->compile ( 'content' );
   					break;
 
   			}
   		}
-
-
-
 	}
 
 ?>

@@ -1,6 +1,7 @@
-<script type="text/javascript" src="/engine/modules/portfolio/js/jquery-1.3.2.js"></script>
+<script type="text/javascript" src="/engine/modules/portfolio/js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="/engine/modules/portfolio/js/jquery.form.js"></script>
 <script type="text/javascript" src="/engine/inc/portfolio/js/town.js"></script>
+
 
 <form method="POST">
 	<input type="hidden" name="act" value="do_edit" />
@@ -114,3 +115,4 @@
 
 
 </form>
+
