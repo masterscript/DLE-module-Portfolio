@@ -70,6 +70,7 @@
 					}
 				},
 				Cancel: function() {
+					$("#town [value='blank_string']").attr("selected", "selected");
 					$( this ).dialog( "close" );
 				}
 			},
