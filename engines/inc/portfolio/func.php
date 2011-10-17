@@ -215,7 +215,7 @@ function getImages ( $user_id )
 <script type="text/javascript">
 	function del_img ( file_name )
 	{
-            $('#fotos').html('<img src="/engine/modules/portfolio/img/loading.gif" border="0" />');
+            //$('#fotos').html('<img src="/engine/modules/portfolio/img/loading.gif" border="0" />');
 
             $.post( '/index.php', { do: 'portfolio', act: 'ajax', sub_act: 'del_foto', foto: file_name, user_id: '{$user_id}' }, function ( data ) {
                		$('#fotos').html( data );

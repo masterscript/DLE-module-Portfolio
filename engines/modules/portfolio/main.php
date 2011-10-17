@@ -22,7 +22,7 @@
 		 $tpl->set ( '{title}',	$_TITLE );
 		 $tpl->set ( '{country}',	getOptions ( getCountries () ));
 		 $tpl->copy_template = <<<HTML
-<script type="text/javascript" src="/engine/inc/plugins/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="/engine/modules/portfolio/js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="/engine/inc/portfolio/js/town.js"></script>
 <script type="text/javascript" src="/engine/inc/portfolio/js/search.js"></script>
 {$tpl->copy_template}

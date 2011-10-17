@@ -12,6 +12,7 @@
         <td>  </td>
         <td class="news" style="padding-bottom:10px;">
 
+
 <form method="POST">
 
 	<table cellpadding="4" cellspacing="0">
@@ -102,19 +103,32 @@
 		<div style="padding-bottom:10px">Фото ваших робіт: <br /><small>Нажміть кнопочку <i>Browse</i> (мають бути включені JavaScript і Flash) і виділіть декілька фото ваших робіт (утримуючи клавішу CTRL, або виділивши мишкою). Коли всі фото будуть вибрані, нажміть <i>Розпочати завантаження</i>. Коли зменшеншені копії Ваших фото зявляться на сторінці, можете натискати кнопку <i>Додати портфоліо</i></div>
 
 		<div id="fotos">{images}</div>
-		<div id="upload"></div>
-		<div style="padding-top:10px;">
-<!--
-		    <input type="button" onClick="$('#upload').fileUploadStart();" class="bbcodes" value=" Розпочати завантаження " />
-		    <input type="button" onClick="$('#upload').fileUploadClearQueue();" class="bbcodes" value=" Очистити чергу " />
--->
-		</div>
 
 	</div>
-
+<div style="float:right">
 	<input type="submit" value=" {button} " />
+</div>
 </form>
-<br /><br /><br />
+
+<div>
+	<script type="text/javascript" src="/engine/modules/portfolio/js/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="/engine/inc/portfolio/js/town.js"></script>
+	<script type="text/javascript" src="/engine/modules/portfolio/js/jquery.MultiFile.js"></script>
+	<script type="text/javascript" src="/engine/modules/portfolio/js/jquery.form.js"></script>
+	<script type="text/javascript" src="/engine/modules/portfolio/js/jquery.blockUI.js"></script>
+	<script type="text/javascript" src="/engine/modules/portfolio/js/app.MultiFile.js"></script>
+
+	<img id="loading" src="/engine/modules/portfolio/img/loading.gif" style="display:none;"/>
+	<form id="uploadForm" action="/engine/modules/portfolio/doajaxfileupload.php" method="post" enctype="multipart/form-data">
+	    <input type="hidden" name="user_id" value="{user_id}" />
+	    <input name="MAX_FILE_SIZE" value="1000000" type="hidden"/>
+	    File: <input name="fileToUpload[]" id="fileToUpload" class="MultiFile" type="file"/>
+	    <input value="Submit" type="submit"/>
+	</form>
+	<div id="uploadOutput"></div>
+</div>
+
+<br /><br />
 <div align=left>
  P.s. Ваше портфоліо зявиться на сайті після перевірки адміністратором. <br>
 В любий зручний для Вас час ви зможете додати нову фотографію чи видалити стару, змінити ціну чи контактну інформацію. Всі зміни відбуватимуться в режимі онлайн. 
