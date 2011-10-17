@@ -1,7 +1,7 @@
 <?php
 
   	if ( ! defined ( 'DATALIFEENGINE' ))
-  	{  		   die ( 'Hacking Attemp!' );
+  	{  		   die ( 'Hacking Attemp!' );
   	}
 
   	$user_name = trim ( $_REQUEST[ 'user_name' ] );
@@ -12,12 +12,12 @@
   	$user_name = $db->safesql ( $user_name );
 
   	if ( $user_name == '' )
-  	{     	 msgbox( $lang['all_info'], "В цього користувача немає анкети!" );
+  	{     	 msgbox( $lang['all_info'], "В цього користувача немає анкети!" );
   	}
   	else
   	{
   		 $_TITLE = 'Перегляд портфоліо кондитера "' . $user_name . '"';
-  		 $db->query ( "SELECT
+  		 $db->query ( "SELECT
   		 		" . PREFIX . "_portfolio.*,
   		 		" . PREFIX . "_users.reg_date,
   		 		" . PREFIX . "_users.lastdate
@@ -27,7 +27,7 @@
   		  WHERE " . PREFIX . "_portfolio.user_name = '{$user_name}'" );
 
   		 if ( $db->num_rows () == 0 )
-  		 {  		 	  msgbox( $lang['all_info'], "В цього користувача немає анкети!" );
+  		 {  		 	  msgbox( $lang['all_info'], "В цього користувача немає анкети!" );
   		 }
   		 else
   		 {
@@ -37,10 +37,10 @@
   		 	  $metatags = create_metatags ( $portfolio_info[ 'comment' ]. $portfolio_info[ 'address'] );
 
               if ( trim ( $portfolio_info[ 'foto' ] ) != '' AND file_exists ( ROOT_DIR . '/uploads/portfolio/foto/' . $portfolio_info[ 'foto' ] ))
-              {               	   $portfolio_info[ 'foto' ] = "/uploads/portfolio/foto/" . $portfolio_info[ 'foto' ];
+              {              	   $portfolio_info[ 'foto' ] = "/uploads/portfolio/foto/" . $portfolio_info[ 'foto' ];
               }
               else
-              {              	   $portfolio_info[ 'foto' ] = "/templates/" . $config['skin']. "/images/noavatar.png";
+              {              	   $portfolio_info[ 'foto' ] = "/templates/" . $config['skin']. "/images/noavatar.png";
               }
 
               $portfolio_info[ 'fotos' ] = showImages ( $portfolio_info[ 'user_id' ] );
@@ -70,10 +70,10 @@
 			  $tpl->load_template ( 'portfolio/show.tpl' );
 
 			  foreach ( $portfolio_info as $name => $value )
-			  {			  		$tpl->set ( '{' . $name . '}', stripslashes ( $value ));
+			  {			  		$tpl->set ( '{' . $name . '}', stripslashes ( $value ));
 
 			  		if ( trim ( $value ) == '' )
-			  		{			  			 $tpl->set_block ( "#\\[{$name}\\](.*)\\[/{$name}\\]#Usi", "" );
+			  		{			  			 $tpl->set_block ( "#\\[{$name}\\](.*)\\[/{$name}\\]#Usi", "" );
 			  		}
 			  		else $tpl->set_block ( "#\\[{$name}\\](.*)\\[/{$name}\\]#Usi", "\\1" );
 			  }

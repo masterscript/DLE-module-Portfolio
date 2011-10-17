@@ -6,7 +6,7 @@
     	    <tr>
 		<td colspan=2 valign=top>
 			<b>Останні додані фото кулінарами:</b>
-			<div class="scriptcode">{last_images}</div>
+			<div class="scriptcode" style="padding-left:40px">{last_images}</div>
 		</td>
 	    </tr>
 	</table>

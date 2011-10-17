@@ -28,7 +28,7 @@
 
          			if ( $country_id != 0 )
          			{
-         				 echo '<option value="0"></option>';
+         				 //echo '<option value="0"></option>';
 	         			 echo getOptions ( getRegions( $country_id ));
 	         		}
 					break;
@@ -38,15 +38,33 @@
 					$region_id = intval ( $_POST[ 'region_id' ] );
 
 					if ( $region_id != 0 )
-					{                         echo '<option value="0"></option>';
+					{                     //    echo '<option value="0"></option>';
 		                            echo getOptions( getTowns( $region_id ));
+					}
+					break;
+				case 'get_towns_marked' :
+					$region_id = intval ( $_POST[ 'region_id' ] );
+					if ( $region_id != 0 )
+					{                     //    echo '<option value="0"></option>';
+		                            echo getOptions( getTowns_marked( $region_id ), 'blank_string');
+					}
+					break;
+				case 'add_town' :
+					$country_id = intval ( $_POST[ 'country' ] );
+					$region_id  = intval ( $_POST[ 'region' ] );
+					if ( trim ( $_POST[ 'town' ] ) != '' AND $country_id != 0 AND $region_id != 0 )
+					{
+						$town = $db->safesql ( $_POST[ 'town' ] );
+						$town = iconv ( 'utf-8', 'windows-1251', $town );
+						$db->query ( "INSERT INTO " . PREFIX . "_portfolio_geo ( name, is_town, country_id, region_id ) VALUES ( '{$town}', 'YES', '{$country_id}', '{$region_id}' )" );
+						clearGeoCache ();
+						echo "1";
 					}
 					break;
 				case 'search' :
 					    require_once ENGINE_DIR . '/inc/portfolio/search.php';
 					break;
          }
-
          die();
 	}
 

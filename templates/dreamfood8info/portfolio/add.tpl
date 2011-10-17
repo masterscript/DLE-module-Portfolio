@@ -48,7 +48,7 @@
 	<tr>
 		<td style="padding:4px">Область:</td>
 		<td style="padding:4px">
-			<select name="port[region]" id="region" onChange="getTowns(this.value, 'town');">
+			<select name="port[region]" id="region" onChange="getTowns_marked(this.value, 'town');">
 				{region}
 			</select>
 		</td>

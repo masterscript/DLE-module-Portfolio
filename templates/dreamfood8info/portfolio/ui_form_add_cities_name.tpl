@@ -14,7 +14,7 @@
 		    <form>
 			<fieldset>
 			    <label for="name">New name of the city:</label>
-			    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+			    <input type="text" name="name_city" id="name_city" class="text ui-widget-content ui-corner-all" />
 			</fieldset>
 		    </form>
     </div>

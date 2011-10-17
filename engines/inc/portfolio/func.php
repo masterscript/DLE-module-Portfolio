@@ -1,7 +1,8 @@
 <?php
 
   	function getCountries ()
-  	{     		global $db;
+  	{
+     		global $db;
 
      		$country = get_vars ( 'portfolio_country' );
 
@@ -12,7 +13,8 @@
 		     	   $country = array ();
 
 		     	   while ( $row = $db->get_row () )
-     			   {     			    	   $country[ $row[ 'id' ]] = $row;
+     			   {
+     			    	   $country[ $row[ 'id' ]] = $row;
      			   }
 
      			   set_vars( 'portfolio_country', $country );
@@ -22,14 +24,16 @@
   	}
 
   	function getRegions ( $country_id )
-  	{  			global $db;
+  	{
+  			global $db;
 
   			$db->query ( "SELECT * FROM " . PREFIX . "_portfolio_geo WHERE is_region = 'YES' AND country_id = '{$country_id}'" );
 
   			$region = array ();
 
   			while ( $row = $db->get_row () )
-  			{  					$region[ $row[ 'id' ]] = $row;
+  			{
+  					$region[ $row[ 'id' ]] = $row;
   			}
 
   			return $region;
@@ -44,15 +48,32 @@
     		$towns = array ();
 
     		while ( $row = $db->get_row () )
-    		{    			    $towns[ $row[ 'id' ]] = $row;
+    		{
+    			    $towns[ $row[ 'id' ]] = $row;
     		}
-		$towns['add_new_city']['name'] = " - add new city - ";
     		return $towns;
   	}
 
+  	function getTowns_marked( $region_id )
+  	{
+    		global $db;
+    		$db->query ( "SELECT * FROM " . PREFIX . "_portfolio_geo WHERE is_town = 'YES' AND region_id = '{$region_id}'" );
+    		$towns = array ();
+    		while ( $row = $db->get_row () )
+    		{    			    $towns[ $row[ 'id' ]] = $row;
+    		}
+		$towns['add_new_city']['name'] = " - add new city - ";
+		$towns['blank_string']['name'] = "";
+    		return $towns;
+  	}
+
+
+
   	function getOptions ( $values, $sel = 0 )
-  	{  			if ( ! is_array ( $values ))
-  			{             	   return "";
+  	{
+  			if ( ! is_array ( $values ))
+  			{
+             	   return "";
   			}
 
   			$options = array ();
@@ -60,19 +81,22 @@
   			foreach ( $values as $id => $value )
   			{
   					$selected = $id == $sel ? ' selected' : '';
-               		$options[] = "<option value=\"" . $id . "\" {$selected}>" . stripslashes ( $value[ 'name' ] ) . "</option>";
+
+               		$options[] = "<option value=\"" . $id . "\" {$selected}>" . stripslashes ( $value[ 'name' ] ) . "</option>";
   			}
 
   			return implode ( "\n", $options );
   	}
 
   	function clearGeoCache()
-  	{  			@unlink ( ENGINE_DIR . '/cache/system/portfolio_country.php' );
+  	{
+  			@unlink ( ENGINE_DIR . '/cache/system/portfolio_country.php' );
   			@unlink ( ENGINE_DIR . '/cache/system/portfolio_services.php' );
   	}
 
   	function getServices ()
-  	{  			global $db;
+  	{
+  			global $db;
 
   			$buffer = get_vars ( 'portfolio_services' );
 
@@ -81,7 +105,8 @@
 	  			   $db->query ( "SELECT * FROM " . PREFIX . "_portfolio_services" );
 
   				   while ( $row = $db->get_row () )
-  				   {  						$buffer[ $row['id' ]] = $row;
+  				   {
+  						$buffer[ $row['id' ]] = $row;
   				   }
 
   				   set_vars ( 'portfolio_services', $buffer );
@@ -91,7 +116,8 @@
   	}
 
   	function showImages ( $user_id )
-  	{  			$full_temp_folder = ROOT_DIR . '/uploads/portfolio/sample/' . $user_id . '/';
+  	{
+  			$full_temp_folder = ROOT_DIR . '/uploads/portfolio/sample/' . $user_id . '/';
 			$files 			  = @scandir ( $full_temp_folder );
 			$allowed_ext 	  = array ( 'png', 'jpg', 'jpeg', 'gif' );
 
@@ -102,7 +128,8 @@ HTML;
 		    $count = 0;
 
 		    if ( ! is_array ( $files ))
-		    {		    	   return "";
+		    {
+		    	   return "";
 		    }
 
 			foreach ( $files as $file_name )
@@ -112,7 +139,8 @@ HTML;
  		 				 $file_ext = strtolower ( end ( explode ( ".", $file_name )));
 
                      	 if ( in_array ( $file_ext, $allowed_ext ))
-                     	 {                           	  $count ++;
+                     	 {
+                           	  $count ++;
 
                            	  if ( $count == 1 )
                            	  {
@@ -125,7 +153,8 @@ HTML;
 </td>
 HTML;
 							  if ( $count > 2 )
-							  {							  	   $count = 0;
+							  {
+							  	   $count = 0;
 							  	   $buffer .= "</tr>";
 							  }
 
@@ -145,25 +174,29 @@ HTML;
 
 function showLastImages ( $numbers_images ){
 	global $db;
-	$db->query ( "SELECT * FROM " . PREFIX . "_portfolio_images ORDER BY " . PREFIX . "_portfolio_images.added_date DESC LIMIT {$numbers_images} " );
+	$query_id_lastimg = $db->query ( "SELECT * FROM " . PREFIX . "_portfolio_images ORDER BY " . PREFIX . "_portfolio_images.added_date DESC LIMIT {$numbers_images} " );
 	$count = 0;
 	$buffer = <<<HTML
 <table cellpadding="4" cellspacing="0">
 HTML;
-	while ( $row = $db->get_row () ){
-				$count ++;
-				if ( $count == 1 ){
-				    $buffer .= "<tr>";
-				}
+	while ( $row = $db->get_row ( $query_id_lastimg ) ){
+		$user_row = $db->super_query ( "SELECT user_name FROM " . PREFIX . "_portfolio WHERE user_id = '{$row['user_id']}'" );
+		
+		$count ++;
+		if ( $count == 1 ){
+			    $buffer .= "<tr>";
+		}
 	$buffer = $buffer . <<<HTML
-<td style="padding:6px">
-<a href="/uploads/portfolio/sample/{$row['user_id']}/{$row['image_name']}" onclick="return hs.expand(this); return false;"><img src="/uploads/portfolio/sample/{$row['user_id']}/mini/{$row['image_name']}" border="0" /></a>
+<td style="padding:20px">
+<a "href="/uploads/portfolio/sample/{$row['user_id']}/{$row['image_name']}" onclick="return hs.expand(this); return false;"><img src="/uploads/portfolio/sample/{$row['user_id']}/mini/{$row['image_name']}" border="0" /></a>
+<div>додав кулiнар</div>
+<a href="/portfolio/{$user_row['user_name']}/">{$user_row['user_name']}</a>
 </td>
 HTML;
-				if ( $count > 2 ){
-				$count = 0;
-				$buffer = $buffer . "</tr>";
-				}
+		if ( $count > 2 ){
+			$count = 0;
+			$buffer = $buffer . "</tr>";
+		}
 	}
 	$buffer = $buffer . "</table>";
 	return $buffer;
@@ -171,7 +204,8 @@ HTML;
 
 
 function getImages ( $user_id )
-  	{			$full_temp_folder = ROOT_DIR . '/uploads/portfolio/sample/' . $user_id . '/';
+  	{
+			$full_temp_folder = ROOT_DIR . '/uploads/portfolio/sample/' . $user_id . '/';
 			$files 			  = @scandir ( $full_temp_folder );
 			$allowed_ext 	  = array ( 'png', 'jpg', 'jpeg', 'gif' );
 
@@ -214,7 +248,7 @@ HTML;
 	<div style="padding-top:10px;"><img src="/engine/modules/portfolio/img/cancel.png" style="cursor:pointer;" title="Видалити" onClick="del_img('{$file_name}');" /></div>
 </td>
 HTML;
-                              if ( $flag == 5 )
+                              if ( $flag == 3 )
                               {
                               	   $flag = 0;
 
@@ -235,7 +269,8 @@ HTML;
   			global $lang, $config;
 
   			$_TIME = time ();
-  			if( date( Ymd, $timestamp ) == date( Ymd, $_TIME ) )
+
+  			if( date( Ymd, $timestamp ) == date( Ymd, $_TIME ) )
   			{
 					return $lang['time_heute'] . langdate( ", H:i", $timestamp );
 			}

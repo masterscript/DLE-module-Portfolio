@@ -91,7 +91,7 @@
 					$tpl->set ( '{country}', 	getOptions ( getCountries (), $row[ 'country' ] ));
 					$tpl->set ( '{services}',	getOptions ( getServices (), $row[ 'services' ] ));
 					$tpl->set ( '{region}',		getOptions ( getRegions ( $row[ 'country' ] ), $row[ 'region' ] ));
-					$tpl->set ( '{town}',		getOptions ( getTowns ( $row[ 'region' ] ), $row[ 'town' ] ));
+					$tpl->set ( '{town}',		getOptions ( getTowns_marked ( $row[ 'region' ] ), $row[ 'town' ] ));
 
 					foreach ( $fields as $field )
 				  	{
@@ -132,11 +132,11 @@ HTML;
 
 
 <script type="text/javascript" src="/engine/modules/portfolio/js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="/engine/inc/portfolio/js/town.js"></script>
 <!--
 <link rel="stylesheet" href="/engine/modules/portfolio/js/uploadify.css"></script>
 <script type="text/javascript" src="/engine/modules/portfolio/js/jquery.form.js"></script>
 <script type="text/javascript" src="/engine/modules/portfolio/js/jquery.uploadify.js"></script>
-<script type="text/javascript" src="/engine/inc/portfolio/js/town.js"></script>
 
 <script type="text/javascript">
 	function upload_complete ()
